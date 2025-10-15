@@ -4,7 +4,6 @@ title: "Apuntes — Índice"
 permalink: /apuntes/index.html
 ---
 
-<section>
 	<h2>Índice de Apuntes</h2>
 	<p class="muted">Listado de apuntes.</p>
 
@@ -41,28 +40,35 @@ permalink: /apuntes/index.html
 			node.querySelector('.note-title').textContent = s.title;
 			node.querySelector('.note-desc').textContent = s.desc;
 			const statusEl = node.querySelector('.note-status');
-			statusEl.textContent = 'comprobando...';
 			list.appendChild(node);
 
-			// Check availability via HEAD request; will work when hosted via HTTP(S)
-			fetch(s.file, { method: 'HEAD' }).then(resp => {
-				const cards = Array.from(list.querySelectorAll('.note-card'));
-				const match = cards.find(c=> c.getAttribute('href') === s.file);
-				if (resp.ok && match) {
-					match.querySelector('.note-status').textContent = 'disponible';
-				} else if (match) {
-					match.querySelector('.note-status').textContent = 'no disponible';
-					match.classList.add('muted');
-				}
-			}).catch(()=>{
-				const cards = Array.from(list.querySelectorAll('.note-card'));
-				const match = cards.find(c=> c.getAttribute('href') === s.file);
-				if (match) match.querySelector('.note-status').textContent = 'por comprobar (archivo local o file://)';
-			});
+			// Folder-based status: maintenance folder = not available; apuntes folder = available
+			if (s.file.includes('/apuntes_mantenimiento/')) {
+				statusEl.textContent = 'no disponible';
+				a.classList.add('muted');
+			} else if (s.file.includes('/apuntes/')) {
+				statusEl.textContent = 'disponible';
+			} else {
+				// Fallback: try HEAD request when hosted
+				statusEl.textContent = 'comprobando...';
+				fetch(s.file, { method: 'HEAD' }).then(resp => {
+					const cards = Array.from(list.querySelectorAll('.note-card'));
+					const match = cards.find(c=> c.getAttribute('href') === s.file);
+					if (resp.ok && match) {
+						match.querySelector('.note-status').textContent = 'disponible';
+					} else if (match) {
+						match.querySelector('.note-status').textContent = 'no disponible';
+						match.classList.add('muted');
+					}
+				}).catch(()=>{
+					const cards = Array.from(list.querySelectorAll('.note-card'));
+					const match = cards.find(c=> c.getAttribute('href') === s.file);
+					if (match) match.querySelector('.note-status').textContent = 'por comprobar (archivo local o file://)';
+				});
+			}
 		});
 
 		// small nav active marker
 		const navLinks = document.querySelectorAll('nav a'); navLinks.forEach(a=>{ if (a.href.includes(location.pathname.split('/').pop())) a.classList.add('active'); });
 	})();
 	</script>
-</section>
