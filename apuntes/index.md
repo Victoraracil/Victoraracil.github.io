@@ -16,5 +16,3 @@ Listado de apuntes:
 - [HTML y CSS](/apuntes_mantenimiento/html-css.html)
 - [JavaScript](/apuntes_mantenimiento/javascript.html)
 - [PHP](/apuntes_mantenimiento/php.html)
-
-> Nota: en la versión original la página comprueba la disponibilidad de los ficheros mediante fetch HEAD. En GitHub Pages los enlaces apuntan a las páginas HTML convertidas (o sus .md si las sirves con Jekyll).
