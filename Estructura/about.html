@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quién soy — Portfolio</title>
+    <link rel="stylesheet" href="style/stle.css">
+        <link rel="icon" href="logo.jpg" type="image/jpeg">
+</head>
+<body>
+    <header>
+        <div class="site-brand">
+            <img src="logo.jpg" alt="Logo Victor Aracil" class="site-logo">
+            <h1 class="site-title">Quien soy</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about.html">Quién soy</a></li>
+                <li><a href="skills.html">Competencias</a></li>
+                <li><a href="projects.html">Proyectos</a></li>
+                <li><a href="apuntes/index.html">Apuntes</a></li>
+                <li><a href="cv.html">CV</a></li>
+                <li><a href="contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Quién soy</h2>
+        <p>Soy estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM) con una fuerte vocación por la tecnología y la seguridad informática. Disfruto tanto del frontend como del backend: me interesa diseñar interfaces limpias y accesibles, y construir arquitecturas robustas detrás de ellas.</p>
+        <p>Estoy especialmente apasionado por la ciberseguridad: estudio conceptos de hardening, análisis de vulnerabilidades, redes y criptografía básica. Me atrapan las pruebas de penetración y la defensa de sistemas, por eso en mis proyectos intento aplicar buenas prácticas de seguridad desde el diseño.</p>
+        <p class="muted">Busco oportunidades para aplicar y ampliar mis conocimientos en proyectos reales o prácticas — puedo colaborar en desarrollo seguro, auditorías ligeras o integración de controles básicos en aplicaciones web.</p>
+    </section>
+
+    <footer>
+        <p>© 2025 Victor Aracil — Portfolio Personal</p>
+    </footer>
+
+    <script>
+    // small script to add 'active' class to current nav link
+    (function(){
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(a => {
+            if (a.href.includes(location.pathname.split('/').pop())) a.classList.add('active');
+        });
+    })();
+    </script>
+</body>
+</html>

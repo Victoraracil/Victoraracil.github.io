@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competencias — Portfolio</title>
+    <link rel="stylesheet" href="style/style.css">
+        <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+</head>
+<body>
+    <header>
+        <div class="site-brand">
+            <img src="logo.jpg" alt="Logo Victor Aracil" class="site-logo">
+            <h1 class="site-title">Competencias</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about.html">Quién soy</a></li>
+                <li><a href="skills.html">Competencias</a></li>
+                <li><a href="projects.html">Proyectos</a></li>
+                <li><a href="apuntes/index.html">Apuntes</a></li>
+                <li><a href="cv.html">CV</a></li>
+                <li><a href="contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Competencias</h2>
+        <ul class="skills-list">
+            <li>HTML5, CSS3, JavaScript</li>
+            <li>PHP y MySQL</li>
+            <li>C#, Java</li>
+            <li>Git / GitHub</li>
+            <li>Trabajo en equipo y comunicación</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>© 2025 Victor Aracil — Portfolio Personal</p>
+    </footer>
+
+    <script>
+    (function(){
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(a => {
+            if (a.href.includes(location.pathname.split('/').pop())) a.classList.add('active');
+        });
+    })();
+    </script>
+</body>
+</html>

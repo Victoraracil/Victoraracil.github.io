@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apuntes — Índice</title>
+  <link rel="stylesheet" href="../style/style.css">
+  <link rel="icon" href="../logo.jpg" type="image/jpeg">
+</head>
+<body>
+  <header>
+    <div class="site-brand">
+      <img src="../logo.jpg" alt="Logo Victor Aracil" class="site-logo">
+      <h1 class="site-title">Apuntes</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../about.html">Quién soy</a></li>
+        <li><a href="../skills.html">Competencias</a></li>
+        <li><a href="../projects.html">Proyectos</a></li>
+        <li><a href="index.html">Apuntes</a></li>
+        <li><a href="../cv.html">CV</a></li>
+        <li><a href="../contact.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Índice de Apuntes</h2>
+      <p class="muted">Listado de apuntes.</p>
+
+      <div id="notes-list" class="notes-container" aria-live="polite"></div>
+
+      <template id="note-template">
+        <a class="note-card" href="#">
+          <h4 class="note-title">Título</h4>
+          <p class="note-desc">Descripción</p>
+          <div class="note-meta muted" style="margin-top:.6rem;font-size:.85rem;">Estado: <span class="note-status">?</span></div>
+        </a>
+      </template>
+
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Victor Aracil</p>
+  </footer>
+
+  <script>
+  (function(){
+    const subjects = [
+      {file: 'bases-de-datos.html', title: 'Bases de Datos', desc: 'Modelos, SQL, normalización y prácticas'},
+      {file: 'csharp.html', title: 'C#', desc: 'Sintaxis, LINQ, programación orientada a objetos'},
+      {file: 'java.html', title: 'Java', desc: 'JVM, clases, colecciones y ejemplos prácticos'},
+      {file: 'ingles.html', title: 'Inglés', desc: 'Vocabulario técnico y lectura técnica'},
+      {file: 'python.html', title: 'Python', desc: 'Sintaxis, scripts y módulos comunes'},
+      {file: 'html-css.html', title: 'HTML y CSS', desc: 'Maquetación, accesibilidad y responsive'},
+      {file: 'javascript.html', title: 'JavaScript', desc: 'DOM, event loop y buenas prácticas'},
+      {file: 'php.html', title: 'PHP', desc: 'Servidor, formularios y conexión a bases de datos'}
+    ];
+
+    const list = document.getElementById('notes-list');
+    const tpl = document.getElementById('note-template');
+
+    // Render all cards; if HTTP server available, check existence and update status
+    subjects.forEach(s => {
+      const node = tpl.content.cloneNode(true);
+      const a = node.querySelector('a');
+      a.href = s.file;
+      node.querySelector('.note-title').textContent = s.title;
+      node.querySelector('.note-desc').textContent = s.desc;
+      const statusEl = node.querySelector('.note-status');
+      statusEl.textContent = 'comprobando...';
+      list.appendChild(node);
+
+      // Try to check file availability when served over HTTP. If fetch fails (e.g. file://), still show link.
+      fetch(s.file, { method: 'HEAD' }).then(resp => {
+        const cards = Array.from(list.querySelectorAll('.note-card'));
+        const match = cards.find(c=> c.getAttribute('href') === s.file);
+        if (resp.ok && match) {
+          match.querySelector('.note-status').textContent = 'disponible';
+        } else if (match) {
+          match.querySelector('.note-status').textContent = 'no disponible';
+          match.classList.add('muted');
+        }
+      }).catch(()=>{
+        // Could be file:// or blocked; still show link but mark unknown
+        const cards = Array.from(list.querySelectorAll('.note-card'));
+        const match = cards.find(c=> c.getAttribute('href') === s.file);
+        if (match) match.querySelector('.note-status').textContent = 'por comprobar (archivo local o file://)';
+      });
+    });
+
+    // small nav active marker
+    const navLinks = document.querySelectorAll('nav a'); navLinks.forEach(a=>{ if (a.href.includes(location.pathname.split('/').pop())) a.classList.add('active'); });
+  })();
+  </script>
+</body>
+</html>
